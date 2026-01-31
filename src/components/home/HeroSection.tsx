@@ -22,7 +22,7 @@ const HeroSection = () => {
 
           {/* Slogan */}
           <p className="text-lg md:text-xl font-medium text-primary mb-4 slide-up">
-            Saving lives, <span className="italic">un mot à la fois</span>
+            Saving lives, <span className="italic">una palabra a la vez</span>
           </p>
 
           {/* Headline */}
