@@ -20,15 +20,20 @@ const HeroSection = () => {
             <span>Designed for Tourists in India</span>
           </div>
 
+          {/* Slogan */}
+          <p className="text-lg md:text-xl font-medium text-primary mb-4 slide-up">
+            Saving lives, <span className="italic">un mot à la fois</span>
+          </p>
+
           {/* Headline */}
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight slide-up">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight slide-up" style={{ animationDelay: "0.1s" }}>
             Your Medical Records,{" "}
             <span className="gradient-text">Translated</span> for Care
           </h1>
 
           {/* Subheadline */}
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 slide-up" style={{ animationDelay: "0.2s" }}>
-            Upload your medical history once. Get instant translations with medical context when you need care abroad. 
+            Upload your medical history once. Get instant translations with medical context when you need care abroad.
             Breaking language barriers to save lives.
           </p>
 
