@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Building2, Mail, Lock, User, Phone, MapPin, Heart } from "lucide-react";
+import { Building2, Mail, Lock, Phone, MapPin, Heart } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { Link } from "react-router-dom";
@@ -104,25 +104,27 @@ const HospitalAuth = () => {
       if (authError) throw authError;
 
       if (authData.user) {
-        // Create hospital record
-        const { data: hospitalData, error: hospitalError } = await supabase
+        // Generate hospital ID client-side to avoid SELECT permission issue
+        const hospitalId = crypto.randomUUID();
+        
+        // Create hospital record (without .select() to avoid RLS SELECT issue)
+        const { error: hospitalError } = await supabase
           .from("hospitals")
           .insert({
+            id: hospitalId,
             name: hospitalName,
             registration_number: registrationNumber || null,
             phone,
             city,
             state,
             email: signupEmail,
-          })
-          .select()
-          .single();
+          });
 
         if (hospitalError) throw hospitalError;
 
         // Link user to hospital as admin
         const { error: staffError } = await supabase.from("hospital_staff").insert({
-          hospital_id: hospitalData.id,
+          hospital_id: hospitalId,
           user_id: authData.user.id,
           is_admin: true,
         });
@@ -134,7 +136,7 @@ const HospitalAuth = () => {
         trialEnds.setMonth(trialEnds.getMonth() + 1);
 
         const { error: subError } = await supabase.from("hospital_subscriptions").insert({
-          hospital_id: hospitalData.id,
+          hospital_id: hospitalId,
           plan: "trial",
           price_rupees: 0,
           duration_months: 1,
