@@ -161,11 +161,24 @@ const HospitalAuth = () => {
         });
       }
     } catch (error: any) {
-      toast({
-        variant: "destructive",
-        title: "Registration failed",
-        description: error.message || "Could not create hospital account",
-      });
+      const isAlreadyRegistered =
+        error.message?.toLowerCase().includes("already") ||
+        error.code === "user_already_exists";
+
+      if (isAlreadyRegistered) {
+        toast({
+          title: "Account already exists",
+          description: "This email is already registered. Please switch to the Login tab to sign in.",
+        });
+        setActiveTab("login");
+        setLoginEmail(signupEmail);
+      } else {
+        toast({
+          variant: "destructive",
+          title: "Registration failed",
+          description: error.message || "Could not create hospital account",
+        });
+      }
     } finally {
       setIsLoading(false);
     }
