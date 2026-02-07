@@ -15,7 +15,8 @@ import {
   Calendar,
   AlertCircle,
   Clock,
-  Crown
+  Crown,
+  Languages
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
@@ -24,6 +25,7 @@ import QRScanner from "@/components/hospital/QRScanner";
 import PatientLookup from "@/components/hospital/PatientLookup";
 import PatientDetails from "@/components/hospital/PatientDetails";
 import SubscriptionBanner from "@/components/hospital/SubscriptionBanner";
+import TranslatorWidget from "@/components/translator/TranslatorWidget";
 
 interface Hospital {
   id: string;
@@ -194,7 +196,7 @@ const HospitalDashboard = () => {
 
         {/* Main Content */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="mt-6">
-          <TabsList className="grid w-full max-w-md mx-auto grid-cols-3 mb-8">
+          <TabsList className="grid w-full max-w-lg mx-auto grid-cols-4 mb-8">
             <TabsTrigger value="lookup" className="gap-2">
               <Search className="w-4 h-4" />
               <span className="hidden sm:inline">Lookup</span>
@@ -202,6 +204,10 @@ const HospitalDashboard = () => {
             <TabsTrigger value="scan" className="gap-2">
               <QrCode className="w-4 h-4" />
               <span className="hidden sm:inline">Scan QR</span>
+            </TabsTrigger>
+            <TabsTrigger value="translate" className="gap-2">
+              <Languages className="w-4 h-4" />
+              <span className="hidden sm:inline">Translate</span>
             </TabsTrigger>
             <TabsTrigger value="details" className="gap-2" disabled={!selectedPatient}>
               <User className="w-4 h-4" />
@@ -221,6 +227,12 @@ const HospitalDashboard = () => {
               hospitalId={hospital?.id || ""} 
               onPatientFound={handlePatientFound} 
             />
+          </TabsContent>
+
+          <TabsContent value="translate">
+            <div className="max-w-4xl mx-auto">
+              <TranslatorWidget compact />
+            </div>
           </TabsContent>
 
           <TabsContent value="details">
