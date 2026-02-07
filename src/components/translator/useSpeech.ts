@@ -1,4 +1,5 @@
 import { useState, useCallback, useRef } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 // Map language codes to BCP-47 for Web Speech API
 const speechLangMap: Record<string, string> = {
@@ -15,41 +16,121 @@ const speechLangMap: Record<string, string> = {
 export const useSpeech = () => {
   const [isListening, setIsListening] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
+  const [speechSupported, setSpeechSupported] = useState<boolean | null>(null);
   const recognitionRef = useRef<any>(null);
+  const { toast } = useToast();
+
+  const getSpeechRecognition = useCallback(() => {
+    const SR = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (!SR) {
+      setSpeechSupported(false);
+      return null;
+    }
+    setSpeechSupported(true);
+    return SR;
+  }, []);
 
   const startListening = useCallback((langCode: string, onResult: (text: string) => void) => {
-    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
-    if (!SpeechRecognition) {
-      alert("Speech recognition is not supported in this browser. Try Chrome.");
+    const SR = getSpeechRecognition();
+    if (!SR) {
+      toast({
+        variant: "destructive",
+        title: "Speech not supported",
+        description: "Please open this page directly in Chrome (not in an iframe/preview) for speech recognition to work.",
+      });
       return;
     }
 
-    const recognition = new SpeechRecognition();
-    recognition.lang = speechLangMap[langCode] || "en-US";
-    recognition.interimResults = false;
-    recognition.continuous = false;
+    // Stop any existing recognition
+    if (recognitionRef.current) {
+      try { recognitionRef.current.abort(); } catch {}
+    }
 
-    recognition.onresult = (event: any) => {
-      const transcript = event.results[0][0].transcript;
-      onResult(transcript);
-    };
+    try {
+      const recognition = new SR();
+      recognition.lang = speechLangMap[langCode] || "en-US";
+      recognition.interimResults = true;
+      recognition.continuous = true;
+      recognition.maxAlternatives = 1;
 
-    recognition.onend = () => setIsListening(false);
-    recognition.onerror = () => setIsListening(false);
+      let finalTranscript = "";
 
-    recognitionRef.current = recognition;
-    setIsListening(true);
-    recognition.start();
-  }, []);
+      recognition.onstart = () => {
+        console.log("Speech recognition started, lang:", recognition.lang);
+        setIsListening(true);
+        toast({ title: "🎤 Listening...", description: "Speak now. Click the mic again to stop." });
+      };
+
+      recognition.onresult = (event: any) => {
+        let interim = "";
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          const transcript = event.results[i][0].transcript;
+          if (event.results[i].isFinal) {
+            finalTranscript += transcript + " ";
+            onResult(transcript);
+          } else {
+            interim = transcript;
+          }
+        }
+        console.log("Speech result - final:", finalTranscript, "interim:", interim);
+      };
+
+      recognition.onerror = (event: any) => {
+        console.error("Speech recognition error:", event.error);
+        setIsListening(false);
+
+        if (event.error === "not-allowed") {
+          toast({
+            variant: "destructive",
+            title: "Microphone access denied",
+            description: "Please allow microphone access in your browser settings, or open this page directly (not in a preview iframe).",
+          });
+        } else if (event.error === "no-speech") {
+          toast({ title: "No speech detected", description: "Please try speaking again." });
+        } else {
+          toast({
+            variant: "destructive",
+            title: "Speech error",
+            description: `Error: ${event.error}. Try opening in a new tab.`,
+          });
+        }
+      };
+
+      recognition.onend = () => {
+        console.log("Speech recognition ended");
+        setIsListening(false);
+      };
+
+      recognitionRef.current = recognition;
+      recognition.start();
+    } catch (err: any) {
+      console.error("Failed to start speech recognition:", err);
+      setIsListening(false);
+      toast({
+        variant: "destructive",
+        title: "Could not start microphone",
+        description: "Try opening this page in a new browser tab directly.",
+      });
+    }
+  }, [getSpeechRecognition, toast]);
 
   const stopListening = useCallback(() => {
-    recognitionRef.current?.stop();
+    if (recognitionRef.current) {
+      try {
+        recognitionRef.current.stop();
+      } catch {}
+      recognitionRef.current = null;
+    }
     setIsListening(false);
   }, []);
 
   const speak = useCallback((text: string, langCode: string) => {
     if (!window.speechSynthesis) {
-      alert("Text-to-speech is not supported in this browser.");
+      toast({
+        variant: "destructive",
+        title: "Text-to-speech not supported",
+        description: "Your browser does not support text-to-speech.",
+      });
       return;
     }
 
@@ -60,7 +141,7 @@ export const useSpeech = () => {
     utterance.onerror = () => setIsSpeaking(false);
     setIsSpeaking(true);
     window.speechSynthesis.speak(utterance);
-  }, []);
+  }, [toast]);
 
-  return { isListening, isSpeaking, startListening, stopListening, speak };
+  return { isListening, isSpeaking, speechSupported, startListening, stopListening, speak };
 };
