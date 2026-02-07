@@ -1,0 +1,48 @@
+export interface Language {
+  code: string;
+  name: string;
+  flag: string;
+}
+
+export const languages: Language[] = [
+  { code: "en", name: "English", flag: "🇬🇧" },
+  { code: "hi", name: "Hindi", flag: "🇮🇳" },
+  { code: "es", name: "Spanish", flag: "🇪🇸" },
+  { code: "fr", name: "French", flag: "🇫🇷" },
+  { code: "de", name: "German", flag: "🇩🇪" },
+  { code: "zh", name: "Chinese", flag: "🇨🇳" },
+  { code: "ja", name: "Japanese", flag: "🇯🇵" },
+  { code: "ko", name: "Korean", flag: "🇰🇷" },
+  { code: "ar", name: "Arabic", flag: "🇸🇦" },
+  { code: "ru", name: "Russian", flag: "🇷🇺" },
+  { code: "pt", name: "Portuguese", flag: "🇵🇹" },
+  { code: "it", name: "Italian", flag: "🇮🇹" },
+  { code: "bn", name: "Bengali", flag: "🇧🇩" },
+  { code: "ta", name: "Tamil", flag: "🇮🇳" },
+  { code: "te", name: "Telugu", flag: "🇮🇳" },
+  { code: "mr", name: "Marathi", flag: "🇮🇳" },
+  { code: "gu", name: "Gujarati", flag: "🇮🇳" },
+  { code: "kn", name: "Kannada", flag: "🇮🇳" },
+  { code: "ml", name: "Malayalam", flag: "🇮🇳" },
+  { code: "pa", name: "Punjabi", flag: "🇮🇳" },
+  { code: "ur", name: "Urdu", flag: "🇵🇰" },
+  { code: "th", name: "Thai", flag: "🇹🇭" },
+  { code: "vi", name: "Vietnamese", flag: "🇻🇳" },
+  { code: "tr", name: "Turkish", flag: "🇹🇷" },
+  { code: "pl", name: "Polish", flag: "🇵🇱" },
+  { code: "nl", name: "Dutch", flag: "🇳🇱" },
+  { code: "sv", name: "Swedish", flag: "🇸🇪" },
+  { code: "da", name: "Danish", flag: "🇩🇰" },
+  { code: "fi", name: "Finnish", flag: "🇫🇮" },
+  { code: "no", name: "Norwegian", flag: "🇳🇴" },
+  { code: "el", name: "Greek", flag: "🇬🇷" },
+  { code: "he", name: "Hebrew", flag: "🇮🇱" },
+  { code: "id", name: "Indonesian", flag: "🇮🇩" },
+  { code: "ms", name: "Malay", flag: "🇲🇾" },
+  { code: "uk", name: "Ukrainian", flag: "🇺🇦" },
+  { code: "cs", name: "Czech", flag: "🇨🇿" },
+  { code: "ro", name: "Romanian", flag: "🇷🇴" },
+  { code: "hu", name: "Hungarian", flag: "🇭🇺" },
+  { code: "sw", name: "Swahili", flag: "🇰🇪" },
+  { code: "af", name: "Afrikaans", flag: "🇿🇦" },
+];
