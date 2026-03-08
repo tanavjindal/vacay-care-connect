@@ -45,7 +45,7 @@ const hi = {
   "cta.demoBtn": "अनुवाद डेमो आज़माएं",
   "cta.disclaimer": "क्रेडिट कार्ड की आवश्यकता नहीं • आपका डेटा निजी और सुरक्षित रहता है",
 
-  "footer.copyright": "© 2024 MediBridge. भाषा की बाधाओं को तोड़कर जीवन बचाना।",
+  "footer.copyright": "© 2024 Translatical. भाषा की बाधाओं को तोड़कर जीवन बचाना।",
   "footer.madeWith": "भारत आने वाले पर्यटकों के लिए ❤️ से बनाया गया",
 
   "auth.welcome": "MediBridge में आपका स्वागत है",
