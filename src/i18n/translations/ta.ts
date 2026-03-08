@@ -48,7 +48,7 @@ const ta = {
   "footer.copyright": "© 2024 Translatical. மொழி தடைகளை உடைத்து உயிர்களைக் காப்பாற்றுதல்.",
   "footer.madeWith": "இந்தியாவிற்கு வரும் சுற்றுலாப் பயணிகளுக்காக ❤️ உடன் உருவாக்கப்பட்டது",
 
-  "auth.welcome": "MediBridge க்கு வரவேற்கிறோம்",
+  "auth.welcome": "Translatical க்கு வரவேற்கிறோம்",
   "auth.subtitle": "உங்கள் சுகாதார சுயவிவரத்தை நிர்வகிக்க உள்நுழையுங்கள்",
   "auth.google": "Google உடன் தொடரவும்",
   "auth.orEmail": "அல்லது மின்னஞ்சல் மூலம் தொடரவும்",

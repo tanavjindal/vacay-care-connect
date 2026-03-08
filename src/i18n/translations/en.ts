@@ -55,7 +55,7 @@ const en = {
   "footer.madeWith": "Made with ❤️ for tourists visiting India",
 
   // Auth
-  "auth.welcome": "Welcome to MediBridge",
+  "auth.welcome": "Welcome to Translatical",
   "auth.subtitle": "Sign in to manage your health profile",
   "auth.google": "Continue with Google",
   "auth.orEmail": "Or continue with email",

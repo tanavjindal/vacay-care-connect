@@ -48,7 +48,7 @@ const es = {
   "footer.copyright": "© 2024 Translatical. Rompiendo barreras lingüísticas para salvar vidas.",
   "footer.madeWith": "Hecho con ❤️ para turistas que visitan India",
 
-  "auth.welcome": "Bienvenido a MediBridge",
+  "auth.welcome": "Bienvenido a Translatical",
   "auth.subtitle": "Inicia sesión para gestionar tu perfil de salud",
   "auth.google": "Continuar con Google",
   "auth.orEmail": "O continuar con correo",
