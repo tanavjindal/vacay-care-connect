@@ -230,7 +230,11 @@ const Therapist = () => {
         messages: [...messages, userMsg],
         topic: TOPICS.find((t) => t.id === selectedTopic)?.label || "general",
         onDelta: (chunk) => upsertAssistant(chunk),
-        onDone: () => setIsLoading(false),
+        onDone: () => {
+          setIsLoading(false);
+          // Speak the complete response
+          speakText(assistantSoFar);
+        },
         onError: (msg) => {
           setMessages((prev) => [
             ...prev,
