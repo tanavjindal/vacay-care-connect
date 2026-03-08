@@ -29,9 +29,7 @@ const Header = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 group">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center shadow-md group-hover:shadow-glow transition-shadow duration-300">
-              <Heart className="w-5 h-5 text-primary-foreground" />
-            </div>
+            <img src="/translatical-logo.png" alt="Translatical" className="w-10 h-10 group-hover:scale-105 transition-transform duration-300" />
             <span className="text-xl font-bold gradient-text">Translatical</span>
           </Link>
 
