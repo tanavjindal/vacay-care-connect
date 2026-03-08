@@ -22,7 +22,7 @@ const hi = {
   "hero.feature3Title": "सुरक्षित रहें",
   "hero.feature3Desc": "डॉक्टरों के साथ प्रभावी ढंग से संवाद करें",
 
-  "howItWorks.title": "MediBridge कैसे काम करता है",
+  "howItWorks.title": "Translatical कैसे काम करता है",
   "howItWorks.subtitle": "सरल कदम यह सुनिश्चित करने के लिए कि आपको भारत में कहीं भी चिकित्सा देखभाल मिले",
   "howItWorks.step1Title": "अपने रिकॉर्ड अपलोड करें",
   "howItWorks.step1Desc": "अपनी यात्रा से पहले, MediBridge पर प्रिस्क्रिप्शन, लैब रिपोर्ट और मेडिकल इतिहास अपलोड करें।",
