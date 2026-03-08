@@ -141,10 +141,10 @@ const Consent = () => {
 
                 <p className="font-medium text-foreground">2. Aadhaar / National ID Usage</p>
                 <p>
-                  MediBridge uses national identification numbers (such as Aadhaar) solely for patient identification
-                  and record matching purposes. {isHospital
-                    ? "Your hospital agrees to use Aadhaar data only for verifying patient identity and accessing authorized records. You shall not store, copy, or redistribute Aadhaar numbers outside the MediBridge platform."
-                    : "Your national ID will be stored securely and used only to link your medical records. It will not be shared with third parties for non-medical purposes."}
+                   Translatical uses national identification numbers (such as Aadhaar) solely for patient identification
+                   and record matching purposes. {isHospital
+                     ? "Your hospital agrees to use Aadhaar data only for verifying patient identity and accessing authorized records. You shall not store, copy, or redistribute Aadhaar numbers outside the Translatical platform."
+                     : "Your national ID will be stored securely and used only to link your medical records. It will not be shared with third parties for non-medical purposes."}
                   This usage complies with the Digital Personal Data Protection Act, 2023 (DPDP Act) and applicable UIDAI guidelines.
                 </p>
 
