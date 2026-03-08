@@ -25,7 +25,7 @@ const en = {
   "hero.feature3Desc": "Communicate effectively with doctors",
 
   // How It Works
-  "howItWorks.title": "How MediBridge Works",
+  "howItWorks.title": "How Translatical Works",
   "howItWorks.subtitle": "Simple steps to ensure you get the medical care you need, anywhere in India",
   "howItWorks.step1Title": "Upload Your Records",
   "howItWorks.step1Desc": "Before your trip, upload prescriptions, lab reports, and medical history to MediBridge.",
