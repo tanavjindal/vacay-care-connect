@@ -131,7 +131,7 @@ const QRScanner = ({ hospitalId, onPatientFound }: QRScannerProps) => {
           </div>
           <h2 className="text-xl font-semibold text-foreground mb-2">Scan Patient QR Code</h2>
           <p className="text-sm text-muted-foreground">
-            Scan the patient's MediBridge QR code for instant access to their medical records
+            Scan the patient's Translatical QR code for instant access to their medical records
           </p>
         </div>
 
