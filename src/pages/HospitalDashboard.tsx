@@ -66,6 +66,13 @@ const HospitalDashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { hasConsented, isLoading: consentLoading } = useConsentCheck("hospital_agreement");
+
+  useEffect(() => {
+    if (!consentLoading && hasConsented === false) {
+      navigate("/consent", { state: { type: "hospital", redirectTo: "/hospital/dashboard" } });
+    }
+  }, [hasConsented, consentLoading]);
 
   useEffect(() => {
     const { data: { subscription: authSub } } = supabase.auth.onAuthStateChange((event, session) => {
