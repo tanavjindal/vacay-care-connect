@@ -109,7 +109,7 @@ const Consent = () => {
             <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center shadow-md">
               <Heart className="w-6 h-6 text-primary-foreground" />
             </div>
-            <span className="text-2xl font-bold gradient-text">MediBridge</span>
+            <span className="text-2xl font-bold gradient-text">Translatical</span>
           </Link>
           <h1 className="text-2xl font-bold text-foreground mb-1">
             {isHospital ? "Hospital Data Agreement" : "Patient Data Consent"}
