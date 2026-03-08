@@ -61,6 +61,17 @@ const ProfilePage = () => {
     preferred_language: "en",
     notifications_enabled: true,
   });
+  const [patient, setPatient] = useState<PatientInfo>({
+    national_id: "",
+    full_name: "",
+    date_of_birth: "",
+    blood_type: "",
+    allergies: "",
+    chronic_conditions: "",
+    emergency_contact_name: "",
+    emergency_contact_phone: "",
+  });
+  const [hasPatientRecord, setHasPatientRecord] = useState(false);
 
   useEffect(() => {
     if (!authLoading && !user) navigate("/auth");
