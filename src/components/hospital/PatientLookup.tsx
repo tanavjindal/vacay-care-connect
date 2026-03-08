@@ -97,11 +97,11 @@ const PatientLookup = ({ hospitalId, onPatientFound }: PatientLookupProps) => {
 
         <form onSubmit={handleSearch} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="search">ID Number or Name</Label>
+            <Label htmlFor="search">Aadhaar / National ID Number</Label>
             <div className="flex gap-2">
               <Input
                 id="search"
-                placeholder="Enter Aadhaar, SSN, or patient name..."
+                placeholder="Enter Aadhaar or National ID number..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="flex-1"
