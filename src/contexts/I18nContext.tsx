@@ -90,7 +90,7 @@ export const I18nProvider = ({ children }: { children: ReactNode }) => {
 
   const setLanguage = useCallback((lang: string) => {
     setLanguageState(lang);
-    localStorage.setItem("medibridge_language", lang);
+    localStorage.setItem("translatical_language", lang);
   }, []);
 
   const t = useCallback(

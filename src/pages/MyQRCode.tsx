@@ -168,7 +168,7 @@ const MyQRCode = () => {
               </div>
 
               <p className="text-xs text-muted-foreground text-center mb-6 max-w-xs">
-                Present this QR code at any MediBridge-enabled hospital. Staff will scan it to securely access your medical records.
+                Present this QR code at any Translatical-enabled hospital. Staff will scan it to securely access your medical records.
               </p>
 
               <div className="flex gap-3">

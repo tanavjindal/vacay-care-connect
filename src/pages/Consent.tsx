@@ -251,7 +251,7 @@ const Consent = () => {
 
         <p className="text-xs text-muted-foreground text-center mt-4 max-w-md mx-auto">
           This agreement is governed by the laws of India, including the Digital Personal Data Protection Act, 2023. 
-          For questions, contact support@medibridge.com.
+          For questions, contact support@translatical.com.
         </p>
       </div>
     </div>
