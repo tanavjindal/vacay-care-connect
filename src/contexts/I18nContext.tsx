@@ -28,7 +28,7 @@ export const I18nProvider = ({ children }: { children: ReactNode }) => {
 
   // Detect browser language on mount
   useEffect(() => {
-    const saved = localStorage.getItem("medibridge_language");
+    const saved = localStorage.getItem("translatical_language");
     if (saved) {
       setLanguageState(saved);
     } else {
