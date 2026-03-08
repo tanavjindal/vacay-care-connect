@@ -260,6 +260,71 @@ const ProfilePage = () => {
               </Select>
             </div>
 
+            {/* Medical Identity Section */}
+            <div className="pt-4 mt-4 border-t border-border">
+              <h2 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
+                <Heart className="w-5 h-5 text-primary" />
+                Medical Identity
+              </h2>
+
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="national_id">Aadhaar / National ID</Label>
+                  <div className="relative">
+                    <CreditCard className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                    <Input id="national_id" className="pl-10" value={patient.national_id} onChange={(e) => setPatient({ ...patient, national_id: e.target.value })} placeholder="1234 5678 9012" />
+                  </div>
+                  <p className="text-xs text-muted-foreground">Used for patient identification at hospitals</p>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="full_name_medical">Full Legal Name (Medical Records)</Label>
+                  <div className="relative">
+                    <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                    <Input id="full_name_medical" className="pl-10" value={patient.full_name} onChange={(e) => setPatient({ ...patient, full_name: e.target.value })} placeholder="As on your ID" />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="dob">Date of Birth</Label>
+                    <Input id="dob" type="date" value={patient.date_of_birth} onChange={(e) => setPatient({ ...patient, date_of_birth: e.target.value })} />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="blood_type">Blood Type</Label>
+                    <div className="relative">
+                      <Droplets className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                      <Input id="blood_type" className="pl-10" value={patient.blood_type} onChange={(e) => setPatient({ ...patient, blood_type: e.target.value })} placeholder="A+, B-, O+" />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="allergies">Allergies</Label>
+                  <div className="relative">
+                    <AlertTriangle className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                    <Input id="allergies" className="pl-10" value={patient.allergies} onChange={(e) => setPatient({ ...patient, allergies: e.target.value })} placeholder="Penicillin, Peanuts (comma-separated)" />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="chronic">Chronic Conditions</Label>
+                  <Input id="chronic" value={patient.chronic_conditions} onChange={(e) => setPatient({ ...patient, chronic_conditions: e.target.value })} placeholder="Diabetes, Asthma (comma-separated)" />
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="emergency_name">Emergency Contact</Label>
+                    <Input id="emergency_name" value={patient.emergency_contact_name} onChange={(e) => setPatient({ ...patient, emergency_contact_name: e.target.value })} placeholder="Contact name" />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="emergency_phone">Emergency Phone</Label>
+                    <Input id="emergency_phone" type="tel" value={patient.emergency_contact_phone} onChange={(e) => setPatient({ ...patient, emergency_contact_phone: e.target.value })} placeholder="+91 98765 43210" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <div className="flex items-center justify-between py-2">
               <div className="flex items-center gap-2">
                 <Bell className="w-4 h-4 text-muted-foreground" />
