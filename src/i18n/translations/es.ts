@@ -45,7 +45,7 @@ const es = {
   "cta.demoBtn": "Prueba la Demo",
   "cta.disclaimer": "Sin tarjeta de crédito • Tus datos permanecen privados y seguros",
 
-  "footer.copyright": "© 2024 MediBridge. Rompiendo barreras lingüísticas para salvar vidas.",
+  "footer.copyright": "© 2024 Translatical. Rompiendo barreras lingüísticas para salvar vidas.",
   "footer.madeWith": "Hecho con ❤️ para turistas que visitan India",
 
   "auth.welcome": "Bienvenido a MediBridge",
