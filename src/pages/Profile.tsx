@@ -272,9 +272,29 @@ const ProfilePage = () => {
                   <Label htmlFor="national_id">Aadhaar / National ID</Label>
                   <div className="relative">
                     <CreditCard className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                    <Input id="national_id" className="pl-10" value={patient.national_id} onChange={(e) => setPatient({ ...patient, national_id: e.target.value })} placeholder="1234 5678 9012" />
+                    <Input
+                      id="national_id"
+                      className="pl-10 tracking-widest font-mono"
+                      value={patient.national_id}
+                      onChange={(e) => {
+                        const raw = e.target.value.replace(/\D/g, "").slice(0, 12);
+                        const formatted = raw.replace(/(\d{4})(?=\d)/g, "$1 ").trim();
+                        setPatient({ ...patient, national_id: formatted });
+                      }}
+                      placeholder="1234 5678 9012"
+                      maxLength={14}
+                      inputMode="numeric"
+                    />
                   </div>
-                  <p className="text-xs text-muted-foreground">Used for patient identification at hospitals</p>
+                  {patient.national_id && patient.national_id.replace(/\s/g, "").length > 0 && patient.national_id.replace(/\s/g, "").length < 12 && (
+                    <p className="text-xs text-destructive">Aadhaar number must be 12 digits</p>
+                  )}
+                  {(!patient.national_id || patient.national_id.replace(/\s/g, "").length === 0) && (
+                    <p className="text-xs text-muted-foreground">Used for patient identification at hospitals</p>
+                  )}
+                  {patient.national_id && patient.national_id.replace(/\s/g, "").length === 12 && (
+                    <p className="text-xs text-green-600">✓ Valid format</p>
+                  )}
                 </div>
 
                 <div className="space-y-2">
