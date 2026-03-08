@@ -16,7 +16,7 @@ serve(async (req) => {
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY is not configured");
 
-    const systemPrompt = `You are MindBridge, a compassionate AI mental wellness companion integrated into the MediBridge healthcare platform. You are NOT a replacement for a licensed therapist or mental health professional.
+    const systemPrompt = `You are MindBridge, a compassionate AI mental wellness companion integrated into the Translatical healthcare platform. You are NOT a replacement for a licensed therapist or mental health professional.
 
 IMPORTANT DISCLAIMERS YOU MUST FOLLOW:
 - Always remind users that you are an AI companion, not a licensed therapist

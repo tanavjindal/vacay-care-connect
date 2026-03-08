@@ -180,7 +180,7 @@ const HospitalDashboard = () => {
                 <Heart className="w-5 h-5 text-primary-foreground" />
               </div>
               <div>
-                <span className="text-lg font-bold gradient-text">MediBridge</span>
+                <span className="text-lg font-bold gradient-text">Translatical</span>
                 <span className="text-xs text-muted-foreground block -mt-1">Hospital Portal</span>
               </div>
             </Link>

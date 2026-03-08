@@ -188,7 +188,7 @@ const QRScanner = ({ hospitalId, onPatientFound }: QRScannerProps) => {
         <div className="mt-6 space-y-2">
           <h4 className="font-medium text-foreground text-sm">How it works:</h4>
           <ol className="text-sm text-muted-foreground space-y-1 list-decimal list-inside">
-            <li>Ask the patient to show their MediBridge QR code from their phone</li>
+            <li>Ask the patient to show their Translatical QR code from their phone</li>
             <li>Point your camera at the QR code</li>
             <li>Patient records will load automatically</li>
           </ol>
