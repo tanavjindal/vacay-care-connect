@@ -91,7 +91,7 @@ const PatientLookup = ({ hospitalId, onPatientFound }: PatientLookupProps) => {
           </div>
           <h2 className="text-xl font-semibold text-foreground mb-2">Patient Lookup</h2>
           <p className="text-sm text-muted-foreground">
-            Search by National ID, Aadhaar number, or patient name
+            Search by National ID or Aadhaar number
           </p>
         </div>
 
