@@ -156,7 +156,7 @@ const Auth = () => {
                 </div>
                 <Button type="submit" className="w-full" disabled={loading}>
                   {loading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
-                  Create Account
+                  {t("auth.createAccount")}
                 </Button>
               </form>
             </TabsContent>
