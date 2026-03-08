@@ -13,11 +13,11 @@ serve(async (req) => {
   }
 
   try {
-    // Verify authentication
+    // Verify authentication using getClaims
     const authHeader = req.headers.get("Authorization");
-    if (!authHeader) {
+    if (!authHeader?.startsWith("Bearer ")) {
       return new Response(
-        JSON.stringify({ error: "Missing authorization header" }),
+        JSON.stringify({ error: "Unauthorized" }),
         { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
@@ -28,8 +28,9 @@ serve(async (req) => {
       { global: { headers: { Authorization: authHeader } } }
     );
 
-    const { data: { user }, error: authError } = await supabaseClient.auth.getUser();
-    if (authError || !user) {
+    const token = authHeader.replace("Bearer ", "");
+    const { data, error: authError } = await supabaseClient.auth.getClaims(token);
+    if (authError || !data?.claims) {
       return new Response(
         JSON.stringify({ error: "Unauthorized" }),
         { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
@@ -37,8 +38,7 @@ serve(async (req) => {
     }
 
     const { messages, topic } = await req.json();
-    
-    // Validate input
+
     if (!messages || !Array.isArray(messages)) {
       return new Response(
         JSON.stringify({ error: "Invalid request: messages array required" }),
@@ -46,7 +46,6 @@ serve(async (req) => {
       );
     }
 
-    // Limit message history to prevent abuse
     const limitedMessages = messages.slice(-20);
 
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
