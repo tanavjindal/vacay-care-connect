@@ -6,7 +6,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Documents from "./pages/Documents";
 import Translate from "./pages/Translate";
-import Therapist from "./pages/Therapist";
 import HospitalAuth from "./pages/HospitalAuth";
 import HospitalDashboard from "./pages/HospitalDashboard";
 import MyQRCode from "./pages/MyQRCode";
@@ -25,7 +24,6 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/documents" element={<Documents />} />
           <Route path="/translate" element={<Translate />} />
-          <Route path="/therapist" element={<Therapist />} />
           <Route path="/hospital/auth" element={<HospitalAuth />} />
           <Route path="/hospital/dashboard" element={<HospitalDashboard />} />
           <Route path="/consent" element={<Consent />} />
