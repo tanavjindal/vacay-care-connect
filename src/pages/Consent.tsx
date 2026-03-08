@@ -132,7 +132,7 @@ const Consent = () => {
               <div className="text-sm text-muted-foreground space-y-3 pr-4">
                 <p className="font-medium text-foreground">1. Medical Data Sharing</p>
                 <p>
-                  By using MediBridge, you consent to the collection, storage, and processing of medical records
+                  By using Translatical, you consent to the collection, storage, and processing of medical records
                   including but not limited to prescriptions, lab reports, imaging results, diagnoses, allergies,
                   chronic conditions, and emergency contact information. {isHospital
                     ? "As a hospital, you agree to access patient data solely for the purpose of providing medical care and only with proper authorization."
