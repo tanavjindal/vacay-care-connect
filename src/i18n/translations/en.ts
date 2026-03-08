@@ -51,7 +51,7 @@ const en = {
   "cta.disclaimer": "No credit card required • Your data stays private and secure",
 
   // Footer
-  "footer.copyright": "© 2024 MediBridge. Breaking language barriers to save lives.",
+  "footer.copyright": "© 2024 Translatical. Breaking language barriers to save lives.",
   "footer.madeWith": "Made with ❤️ for tourists visiting India",
 
   // Auth
