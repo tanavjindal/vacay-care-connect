@@ -73,8 +73,8 @@ const Auth = () => {
           <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
             <Heart className="w-8 h-8 text-primary" />
           </div>
-          <h1 className="text-3xl font-bold text-foreground mb-2">Welcome to MediBridge</h1>
-          <p className="text-muted-foreground">Sign in to manage your health profile</p>
+          <h1 className="text-3xl font-bold text-foreground mb-2">{t("auth.welcome")}</h1>
+          <p className="text-muted-foreground">{t("auth.subtitle")}</p>
         </div>
 
         <Card className="p-6">
