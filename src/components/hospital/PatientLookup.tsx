@@ -44,7 +44,7 @@ const PatientLookup = ({ hospitalId, onPatientFound }: PatientLookupProps) => {
       const { data, error } = await supabase
         .from("patients")
         .select("*")
-        .or(`national_id.ilike.%${searchQuery}%,full_name.ilike.%${searchQuery}%`)
+        .ilike("national_id", `%${searchQuery}%`)
         .limit(10);
 
       if (error) throw error;
