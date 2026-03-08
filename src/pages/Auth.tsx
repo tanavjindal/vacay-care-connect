@@ -19,6 +19,7 @@ const Auth = () => {
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
   const { user } = useAuth();
+  const { t } = useI18n();
   const navigate = useNavigate();
   const { toast } = useToast();
 
