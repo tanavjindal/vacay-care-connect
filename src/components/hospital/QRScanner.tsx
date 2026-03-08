@@ -16,7 +16,6 @@ interface Patient {
   chronic_conditions: string[] | null;
   emergency_contact_name: string | null;
   emergency_contact_phone: string | null;
-  qr_code_token: string;
 }
 
 interface QRScannerProps {
@@ -52,7 +51,7 @@ const QRScanner = ({ hospitalId, onPatientFound }: QRScannerProps) => {
           qrbox: { width: 250, height: 250 },
         },
         onScanSuccess,
-        () => {} // Ignore failures during scanning
+        () => {}
       );
     } catch (err: any) {
       setError(err.message || "Could not start camera");
@@ -73,7 +72,6 @@ const QRScanner = ({ hospitalId, onPatientFound }: QRScannerProps) => {
   };
 
   const onScanSuccess = async (decodedText: string) => {
-    // Stop scanner immediately
     await stopScanner();
     setIsLoading(true);
 
@@ -84,37 +82,34 @@ const QRScanner = ({ hospitalId, onPatientFound }: QRScannerProps) => {
         token = decodedText.replace("translatical:patient:", "");
       }
 
-      // Look up patient by QR token
-      const { data: patient, error: patientError } = await supabase
-        .from("patients")
-        .select("*")
-        .eq("qr_code_token", token)
-        .maybeSingle();
+      // Validate token is a valid UUID format
+      const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+      if (!uuidRegex.test(token)) {
+        setError("Invalid QR code format.");
+        return;
+      }
 
-      if (patientError) throw patientError;
+      // Use secure server-side function for patient lookup
+      const { data, error: lookupError } = await supabase.rpc("lookup_patient_by_qr", {
+        _qr_token: token,
+        _hospital_id: hospitalId,
+      });
 
-      if (!patient) {
+      if (lookupError) throw lookupError;
+
+      if (!data || data.length === 0) {
         setError("Invalid QR code. Patient not found.");
         return;
       }
 
-      // Log access for audit
-      const session = await supabase.auth.getSession();
-      if (session.data.session) {
-        await supabase.from("hospital_patient_access_logs").insert({
-          hospital_id: hospitalId,
-          patient_id: patient.id,
-          accessed_by: session.data.session.user.id,
-          access_method: "qr_scan",
-        });
-      }
+      const patient = data[0];
 
       toast({
         title: "Patient found!",
         description: `Loading records for ${patient.full_name}`,
       });
 
-      onPatientFound(patient);
+      onPatientFound(patient as any);
     } catch (err: any) {
       setError(err.message || "Failed to look up patient");
     } finally {
