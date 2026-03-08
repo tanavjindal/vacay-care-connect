@@ -22,7 +22,7 @@ const ta = {
   "hero.feature3Title": "பாதுகாப்பாக இருங்கள்",
   "hero.feature3Desc": "மருத்துவர்களுடன் திறம்பட தொடர்பு கொள்ளுங்கள்",
 
-  "howItWorks.title": "MediBridge எப்படி வேலை செய்கிறது",
+  "howItWorks.title": "Translatical எப்படி வேலை செய்கிறது",
   "howItWorks.subtitle": "இந்தியாவில் எங்கும் மருத்துவ சிகிச்சை பெற எளிய படிகள்",
   "howItWorks.step1Title": "உங்கள் பதிவுகளை பதிவேற்றுங்கள்",
   "howItWorks.step1Desc": "உங்கள் பயணத்திற்கு முன், மருந்துச்சீட்டுகள் மற்றும் மருத்துவ வரலாற்றை பதிவேற்றுங்கள்.",
