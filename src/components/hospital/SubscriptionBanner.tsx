@@ -26,9 +26,9 @@ const SubscriptionBanner = ({ subscription }: SubscriptionBannerProps) => {
   const isExpired = trialDaysRemaining <= 0 && subscription.plan === "trial";
 
   const pricingPlans = [
-    { months: 4, price: 200, label: "4 Months", popular: false },
-    { months: 6, price: 250, label: "6 Months", popular: true },
-    { months: 8, price: 350, label: "8 Months", popular: false },
+    { months: 4, price: 100, label: "4 Months", popular: false },
+    { months: 6, price: 200, label: "6 Months", popular: true },
+    { months: 8, price: 250, label: "8 Months", popular: false },
   ];
 
   if (isExpired) {
