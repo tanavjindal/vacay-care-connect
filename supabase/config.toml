@@ -1,1 +1,4 @@
 project_id = "izkskkoxcinccvehcoqb"
+
+[functions.ai-therapist]
+verify_jwt = false
