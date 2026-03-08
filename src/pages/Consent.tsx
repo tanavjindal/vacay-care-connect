@@ -167,8 +167,8 @@ const Consent = () => {
 
                 <p className="font-medium text-foreground">5. Right to Withdraw</p>
                 <p>
-                  You may withdraw your consent at any time by contacting support@medibridge.com. 
-                  Upon withdrawal, your data will be deleted within 30 days unless retention is required by law.
+                   You may withdraw your consent at any time by contacting support@translatical.com. 
+                   Upon withdrawal, your data will be deleted within 30 days unless retention is required by law.
                 </p>
               </div>
             </ScrollArea>
