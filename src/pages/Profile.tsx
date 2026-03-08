@@ -79,26 +79,48 @@ const ProfilePage = () => {
 
   useEffect(() => {
     if (!user) return;
-    const fetchProfile = async () => {
-      const { data } = await supabase
+    const fetchData = async () => {
+      // Fetch profile
+      const { data: profileData } = await supabase
         .from("profiles")
         .select("*")
         .eq("user_id", user.id)
         .single();
-      if (data) {
+      if (profileData) {
         setProfile({
-          display_name: data.display_name || "",
-          avatar_url: data.avatar_url || "",
-          phone: data.phone || "",
-          address: data.address || "",
-          city: data.city || "",
-          preferred_language: data.preferred_language || "en",
-          notifications_enabled: data.notifications_enabled ?? true,
+          display_name: profileData.display_name || "",
+          avatar_url: profileData.avatar_url || "",
+          phone: profileData.phone || "",
+          address: profileData.address || "",
+          city: profileData.city || "",
+          preferred_language: profileData.preferred_language || "en",
+          notifications_enabled: profileData.notifications_enabled ?? true,
         });
       }
+
+      // Fetch patient record
+      const { data: patientData } = await supabase
+        .from("patients")
+        .select("*")
+        .eq("user_id", user.id)
+        .maybeSingle();
+      if (patientData) {
+        setHasPatientRecord(true);
+        setPatient({
+          national_id: patientData.national_id || "",
+          full_name: patientData.full_name || "",
+          date_of_birth: patientData.date_of_birth || "",
+          blood_type: patientData.blood_type || "",
+          allergies: patientData.allergies?.join(", ") || "",
+          chronic_conditions: patientData.chronic_conditions?.join(", ") || "",
+          emergency_contact_name: patientData.emergency_contact_name || "",
+          emergency_contact_phone: patientData.emergency_contact_phone || "",
+        });
+      }
+
       setLoading(false);
     };
-    fetchProfile();
+    fetchData();
   }, [user]);
 
   const handleSave = async (e: React.FormEvent) => {
