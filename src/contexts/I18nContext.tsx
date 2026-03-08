@@ -34,7 +34,7 @@ export const I18nProvider = ({ children }: { children: ReactNode }) => {
     } else {
       const detected = detectBrowserLanguage();
       setLanguageState(detected);
-      localStorage.setItem("medibridge_language", detected);
+      localStorage.setItem("translatical_language", detected);
     }
   }, []);
 
