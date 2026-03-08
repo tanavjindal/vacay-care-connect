@@ -22,6 +22,17 @@ type Profile = {
   notifications_enabled: boolean;
 };
 
+type PatientInfo = {
+  national_id: string;
+  full_name: string;
+  date_of_birth: string;
+  blood_type: string;
+  allergies: string;
+  chronic_conditions: string;
+  emergency_contact_name: string;
+  emergency_contact_phone: string;
+};
+
 const LANGUAGES = [
   { value: "en", label: "English" },
   { value: "hi", label: "Hindi" },
