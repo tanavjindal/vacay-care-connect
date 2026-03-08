@@ -381,6 +381,53 @@ export type Database = {
         Args: { _hospital_id: string; _user_id: string }
         Returns: boolean
       }
+      log_patient_access: {
+        Args: {
+          _access_method: string
+          _hospital_id: string
+          _patient_id: string
+        }
+        Returns: undefined
+      }
+      lookup_patient_by_name: {
+        Args: { _hospital_id: string; _search_name: string }
+        Returns: {
+          allergies: string[]
+          blood_type: string
+          chronic_conditions: string[]
+          date_of_birth: string
+          emergency_contact_name: string
+          emergency_contact_phone: string
+          full_name: string
+          id: string
+          national_id: string
+        }[]
+      }
+      lookup_patient_by_qr: {
+        Args: { _hospital_id: string; _qr_token: string }
+        Returns: {
+          allergies: string[]
+          blood_type: string
+          chronic_conditions: string[]
+          date_of_birth: string
+          emergency_contact_name: string
+          emergency_contact_phone: string
+          full_name: string
+          id: string
+          national_id: string
+        }[]
+      }
+      register_hospital: {
+        Args: {
+          _city?: string
+          _email?: string
+          _hospital_name: string
+          _phone?: string
+          _registration_number?: string
+          _state?: string
+        }
+        Returns: string
+      }
       user_has_active_hospital_subscription: {
         Args: { _user_id: string }
         Returns: boolean
