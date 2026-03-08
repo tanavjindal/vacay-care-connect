@@ -42,7 +42,7 @@ const Auth = () => {
     if (error) {
       toast({ title: "Sign up failed", description: error.message, variant: "destructive" });
     } else {
-      toast({ title: "Check your email", description: "We sent you a verification link to confirm your account." });
+      toast({ title: t("auth.checkEmail"), description: t("auth.checkEmailDesc") });
     }
   };
 
