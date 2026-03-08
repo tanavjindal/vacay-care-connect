@@ -56,7 +56,19 @@ const HospitalAuth = () => {
       .maybeSingle();
 
     if (staffData) {
-      navigate("/hospital/dashboard");
+      // Check consent before going to dashboard
+      const { data: consentData } = await supabase
+        .from("user_consents")
+        .select("id")
+        .eq("user_id", userId)
+        .eq("consent_type", "hospital_agreement")
+        .maybeSingle();
+
+      if (consentData) {
+        navigate("/hospital/dashboard");
+      } else {
+        navigate("/consent", { state: { type: "hospital", redirectTo: "/hospital/dashboard" } });
+      }
     }
   };
 
