@@ -26,6 +26,8 @@ const Index = () => {
               {t("footer.copyright")}
             </p>
             <div className="flex items-center gap-6 text-sm text-muted-foreground">
+              <Link to="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link>
+              <Link to="/terms" className="hover:text-primary transition-colors">Terms of Service</Link>
               <span>{t("footer.madeWith")}</span>
             </div>
           </div>
