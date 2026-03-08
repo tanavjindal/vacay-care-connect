@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Documents from "./pages/Documents";
 import Translate from "./pages/Translate";
+import Therapist from "./pages/Therapist";
 import HospitalAuth from "./pages/HospitalAuth";
 import HospitalDashboard from "./pages/HospitalDashboard";
 import MyQRCode from "./pages/MyQRCode";
