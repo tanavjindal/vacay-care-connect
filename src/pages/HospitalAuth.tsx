@@ -116,56 +116,17 @@ const HospitalAuth = () => {
       if (authError) throw authError;
 
       if (authData.user) {
-        // Generate hospital ID client-side to avoid SELECT permission issue
-        const hospitalId = crypto.randomUUID();
-        
-        // Create hospital record (without .select() to avoid RLS SELECT issue)
-        const { error: hospitalError } = await supabase
-          .from("hospitals")
-          .insert({
-            id: hospitalId,
-            name: hospitalName,
-            registration_number: registrationNumber || null,
-            phone,
-            city,
-            state,
-            email: signupEmail,
-          });
-
-        if (hospitalError) throw hospitalError;
-
-        // Link user to hospital as admin
-        const { error: staffError } = await supabase.from("hospital_staff").insert({
-          hospital_id: hospitalId,
-          user_id: authData.user.id,
-          is_admin: true,
+        // Use secure server-side function for hospital registration
+        const { data: hospitalId, error: regError } = await supabase.rpc("register_hospital", {
+          _hospital_name: hospitalName,
+          _registration_number: registrationNumber || null,
+          _phone: phone || null,
+          _city: city || null,
+          _state: state || null,
+          _email: signupEmail,
         });
 
-        if (staffError) throw staffError;
-
-        // Create trial subscription (1 month free)
-        const trialEnds = new Date();
-        trialEnds.setMonth(trialEnds.getMonth() + 1);
-
-        const { error: subError } = await supabase.from("hospital_subscriptions").insert({
-          hospital_id: hospitalId,
-          plan: "trial",
-          price_rupees: 0,
-          duration_months: 1,
-          trial_ends_at: trialEnds.toISOString(),
-          subscription_ends_at: trialEnds.toISOString(),
-          is_active: true,
-        });
-
-        if (subError) throw subError;
-
-        // Add hospital_admin role
-        const { error: roleError } = await supabase.from("user_roles").insert({
-          user_id: authData.user.id,
-          role: "hospital_admin",
-        });
-
-        if (roleError) throw roleError;
+        if (regError) throw regError;
 
         toast({
           title: "Registration successful!",
