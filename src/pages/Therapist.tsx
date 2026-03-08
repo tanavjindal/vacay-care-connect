@@ -455,8 +455,33 @@ const Therapist = () => {
 
         {/* Input */}
         <form onSubmit={handleSend} className="flex gap-2 pt-2 border-t border-border/50">
+          <Button
+            type="button"
+            variant={voiceEnabled ? "secondary" : "ghost"}
+            size="icon"
+            onClick={() => {
+              setVoiceEnabled(!voiceEnabled);
+              if (voiceEnabled) window.speechSynthesis?.cancel();
+            }}
+            title={voiceEnabled ? "Mute AI voice" : "Enable AI voice"}
+          >
+            {voiceEnabled ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
+          </Button>
+
+          <Button
+            type="button"
+            variant={isListening ? "destructive" : "outline"}
+            size="icon"
+            onClick={isListening ? stopListening : startListening}
+            disabled={isLoading}
+            title={isListening ? "Stop listening" : "Speak"}
+            className={isListening ? "animate-pulse" : ""}
+          >
+            {isListening ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
+          </Button>
+
           <Input
-            placeholder="Type your message..."
+            placeholder={isListening ? "Listening..." : "Type or tap the mic to speak..."}
             value={input}
             onChange={(e) => setInput(e.target.value)}
             disabled={isLoading}
@@ -468,7 +493,8 @@ const Therapist = () => {
         </form>
 
         <p className="text-[10px] text-muted-foreground text-center mt-2">
-          MindBridge is an AI companion, not a licensed therapist. In crisis, call iCall: 9152987821
+          MindBridge is an AI companion, not a licensed therapist. In crisis, call iCall: 9152987821 • 
+          {voiceEnabled ? " 🔊 Voice on" : " 🔇 Voice off"}
         </p>
       </main>
     </div>
