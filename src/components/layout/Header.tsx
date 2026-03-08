@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Heart, FileText, MessageCircle, Building2, QrCode, Brain } from "lucide-react";
+import { Menu, X, Heart, FileText, MessageCircle, Building2, QrCode } from "lucide-react";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
