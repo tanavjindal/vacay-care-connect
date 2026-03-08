@@ -9,7 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import Header from "@/components/layout/Header";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
-import { User, Phone, MapPin, Building2, Globe, Bell, LogOut, Loader2, Save } from "lucide-react";
+import { User, Phone, MapPin, Building2, Globe, Bell, LogOut, Loader2, Save, CreditCard, Droplets, AlertTriangle, Heart } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 type Profile = {
