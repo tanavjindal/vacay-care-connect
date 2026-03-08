@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Heart, FileText, MessageCircle, Building2, QrCode } from "lucide-react";
+import { Menu, X, Heart, FileText, MessageCircle, Building2, QrCode, UserCircle, LogIn } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const { user } = useAuth();
 
   const navItems = [
     { path: "/", label: "Home", icon: Heart },
@@ -42,6 +44,15 @@ const Header = () => {
                 </Button>
               </Link>
             ))}
+            <Link to={user ? "/profile" : "/auth"}>
+              <Button
+                variant={isActive("/profile") || isActive("/auth") ? "secondary" : "ghost"}
+                className={`gap-2 ${isActive("/profile") || isActive("/auth") ? "bg-primary/10 text-primary" : ""}`}
+              >
+                {user ? <UserCircle className="w-4 h-4" /> : <LogIn className="w-4 h-4" />}
+                {user ? "Profile" : "Sign In"}
+              </Button>
+            </Link>
           </nav>
 
           {/* Mobile Menu Button */}
@@ -74,6 +85,15 @@ const Header = () => {
                   </Button>
                 </Link>
               ))}
+              <Link to={user ? "/profile" : "/auth"} onClick={() => setIsMenuOpen(false)}>
+                <Button
+                  variant={isActive("/profile") || isActive("/auth") ? "secondary" : "ghost"}
+                  className={`w-full justify-start gap-2 ${isActive("/profile") || isActive("/auth") ? "bg-primary/10 text-primary" : ""}`}
+                >
+                  {user ? <UserCircle className="w-4 h-4" /> : <LogIn className="w-4 h-4" />}
+                  {user ? "Profile" : "Sign In"}
+                </Button>
+              </Link>
             </div>
           </nav>
         )}
