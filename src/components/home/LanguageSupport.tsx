@@ -1,3 +1,5 @@
+import { useI18n } from "@/contexts/I18nContext";
+
 const languages = [
   { name: "English", flag: "🇬🇧", code: "en" },
   { name: "Hindi", flag: "🇮🇳", code: "hi" },
@@ -14,15 +16,17 @@ const languages = [
 ];
 
 const LanguageSupport = () => {
+  const { t } = useI18n();
+
   return (
     <section className="py-24">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Supporting <span className="gradient-text">Multiple Languages</span>
+            {t("langSupport.title")} <span className="gradient-text">{t("langSupport.titleHighlight")}</span>
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Communicate in your native language while getting accurate medical translations
+            {t("langSupport.subtitle")}
           </p>
         </div>
 
@@ -40,7 +44,7 @@ const LanguageSupport = () => {
         </div>
 
         <p className="text-center text-sm text-muted-foreground mt-8">
-          And many more languages coming soon...
+          {t("langSupport.more")}
         </p>
       </div>
     </section>
