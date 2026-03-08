@@ -269,6 +269,39 @@ export type Database = {
         }
         Relationships: []
       }
+      user_consents: {
+        Row: {
+          agreed_at: string
+          consent_type: string
+          consent_version: string
+          created_at: string
+          full_name_signature: string | null
+          id: string
+          ip_address: string | null
+          user_id: string
+        }
+        Insert: {
+          agreed_at?: string
+          consent_type: string
+          consent_version?: string
+          created_at?: string
+          full_name_signature?: string | null
+          id?: string
+          ip_address?: string | null
+          user_id: string
+        }
+        Update: {
+          agreed_at?: string
+          consent_type?: string
+          consent_version?: string
+          created_at?: string
+          full_name_signature?: string | null
+          id?: string
+          ip_address?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string

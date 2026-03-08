@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useConsentCheck } from "@/hooks/useConsentCheck";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
@@ -65,6 +66,13 @@ const HospitalDashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { hasConsented, isLoading: consentLoading } = useConsentCheck("hospital_agreement");
+
+  useEffect(() => {
+    if (!consentLoading && hasConsented === false) {
+      navigate("/consent", { state: { type: "hospital", redirectTo: "/hospital/dashboard" } });
+    }
+  }, [hasConsented, consentLoading]);
 
   useEffect(() => {
     const { data: { subscription: authSub } } = supabase.auth.onAuthStateChange((event, session) => {

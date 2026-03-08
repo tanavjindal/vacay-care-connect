@@ -9,6 +9,7 @@ import Translate from "./pages/Translate";
 import HospitalAuth from "./pages/HospitalAuth";
 import HospitalDashboard from "./pages/HospitalDashboard";
 import MyQRCode from "./pages/MyQRCode";
+import Consent from "./pages/Consent";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -25,6 +26,7 @@ const App = () => (
           <Route path="/translate" element={<Translate />} />
           <Route path="/hospital/auth" element={<HospitalAuth />} />
           <Route path="/hospital/dashboard" element={<HospitalDashboard />} />
+          <Route path="/consent" element={<Consent />} />
           <Route path="/my-qr" element={<MyQRCode />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
