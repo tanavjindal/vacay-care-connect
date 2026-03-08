@@ -11,7 +11,6 @@ const Header = () => {
     { path: "/", label: "Home", icon: Heart },
     { path: "/documents", label: "My Documents", icon: FileText },
     { path: "/translate", label: "Translate", icon: MessageCircle },
-    { path: "/therapist", label: "MindBridge", icon: Brain },
     { path: "/my-qr", label: "My QR Code", icon: QrCode },
     { path: "/hospital/auth", label: "Hospital Portal", icon: Building2 },
   ];
