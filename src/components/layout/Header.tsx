@@ -30,7 +30,10 @@ const Header = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 group">
             <img src="/translatical-logo.png" alt="Translatical" className="w-10 h-10 group-hover:scale-105 transition-transform duration-300" />
-            <span className="text-xl font-bold gradient-text">Translatical</span>
+            <div className="flex flex-col leading-tight">
+              <span className="text-xl font-bold gradient-text">Translatical</span>
+              <span className="text-[10px] text-muted-foreground hidden sm:block">Breaking language barriers to save lives</span>
+            </div>
           </Link>
 
           {/* Desktop Navigation */}
