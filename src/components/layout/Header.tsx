@@ -32,7 +32,7 @@ const Header = () => {
             <img src="/translatical-logo.png" alt="Translatical" className="w-10 h-10 group-hover:scale-105 transition-transform duration-300" />
             <div className="flex flex-col leading-tight">
               <span className="text-xl font-bold gradient-text">Translatical</span>
-              <span className="text-[10px] text-muted-foreground hidden sm:block">Breaking language barriers to save lives</span>
+              <span className="text-[10px] text-muted-foreground hidden sm:block">Your Medical Records, Translated for Care</span>
             </div>
           </Link>
 
