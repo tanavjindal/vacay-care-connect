@@ -103,7 +103,7 @@ const MyQRCode = () => {
     img.src = "data:image/svg+xml;base64," + btoa(svgData);
   };
 
-  const qrValue = qrToken ? `medibridge:patient:${qrToken}` : "";
+  const qrValue = qrToken ? `translatical:patient:${qrToken}` : "";
 
   return (
     <div className="min-h-screen bg-background">
