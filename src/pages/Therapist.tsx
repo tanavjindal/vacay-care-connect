@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
@@ -12,6 +12,10 @@ import {
   AlertTriangle,
   Brain,
   Sparkles,
+  Mic,
+  MicOff,
+  Volume2,
+  VolumeX,
 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 
@@ -108,13 +112,91 @@ const Therapist = () => {
   const [messages, setMessages] = useState<Msg[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isListening, setIsListening] = useState(false);
+  const [voiceEnabled, setVoiceEnabled] = useState(true);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const recognitionRef = useRef<any>(null);
+  const lastSpokenRef = useRef<string>("");
 
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [messages]);
+
+  // Speak AI response using browser TTS
+  const speakText = useCallback((text: string) => {
+    if (!voiceEnabled || !window.speechSynthesis) return;
+    
+    // Strip markdown for cleaner speech
+    const cleanText = text
+      .replace(/[#*_~`>\-\[\]()!]/g, "")
+      .replace(/\n+/g, ". ")
+      .trim();
+    
+    if (!cleanText || cleanText === lastSpokenRef.current) return;
+    lastSpokenRef.current = cleanText;
+
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(cleanText);
+    utterance.rate = 0.9;
+    utterance.pitch = 0.95;
+    utterance.volume = 1;
+    
+    // Try to find a calm, gentle voice
+    const voices = window.speechSynthesis.getVoices();
+    const preferred = voices.find(
+      (v) => v.name.includes("Samantha") || v.name.includes("Karen") || 
+             v.name.includes("Google UK English Female") || v.name.includes("Microsoft Zira") ||
+             (v.lang.startsWith("en") && v.name.toLowerCase().includes("female"))
+    ) || voices.find((v) => v.lang.startsWith("en"));
+    
+    if (preferred) utterance.voice = preferred;
+    window.speechSynthesis.speak(utterance);
+  }, [voiceEnabled]);
+
+  // Start listening via browser speech recognition
+  const startListening = useCallback(() => {
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      alert("Speech recognition is not supported in this browser. Please open in a new tab.");
+      return;
+    }
+
+    const recognition = new SpeechRecognition();
+    recognition.continuous = false;
+    recognition.interimResults = true;
+    recognition.lang = "en-US";
+
+    recognition.onstart = () => setIsListening(true);
+    
+    recognition.onresult = (event: any) => {
+      let transcript = "";
+      for (let i = 0; i < event.results.length; i++) {
+        transcript += event.results[i][0].transcript;
+      }
+      setInput(transcript);
+    };
+
+    recognition.onend = () => {
+      setIsListening(false);
+    };
+
+    recognition.onerror = (event: any) => {
+      console.error("Speech recognition error:", event.error);
+      setIsListening(false);
+    };
+
+    recognitionRef.current = recognition;
+    recognition.start();
+  }, []);
+
+  const stopListening = useCallback(() => {
+    if (recognitionRef.current) {
+      recognitionRef.current.stop();
+    }
+    setIsListening(false);
+  }, []);
 
   const handleAcceptAndStart = () => {
     setAcceptedDisclaimer(true);
@@ -148,7 +230,11 @@ const Therapist = () => {
         messages: [...messages, userMsg],
         topic: TOPICS.find((t) => t.id === selectedTopic)?.label || "general",
         onDelta: (chunk) => upsertAssistant(chunk),
-        onDone: () => setIsLoading(false),
+        onDone: () => {
+          setIsLoading(false);
+          // Speak the complete response
+          speakText(assistantSoFar);
+        },
         onError: (msg) => {
           setMessages((prev) => [
             ...prev,
@@ -369,8 +455,33 @@ const Therapist = () => {
 
         {/* Input */}
         <form onSubmit={handleSend} className="flex gap-2 pt-2 border-t border-border/50">
+          <Button
+            type="button"
+            variant={voiceEnabled ? "secondary" : "ghost"}
+            size="icon"
+            onClick={() => {
+              setVoiceEnabled(!voiceEnabled);
+              if (voiceEnabled) window.speechSynthesis?.cancel();
+            }}
+            title={voiceEnabled ? "Mute AI voice" : "Enable AI voice"}
+          >
+            {voiceEnabled ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
+          </Button>
+
+          <Button
+            type="button"
+            variant={isListening ? "destructive" : "outline"}
+            size="icon"
+            onClick={isListening ? stopListening : startListening}
+            disabled={isLoading}
+            title={isListening ? "Stop listening" : "Speak"}
+            className={isListening ? "animate-pulse" : ""}
+          >
+            {isListening ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
+          </Button>
+
           <Input
-            placeholder="Type your message..."
+            placeholder={isListening ? "Listening..." : "Type or tap the mic to speak..."}
             value={input}
             onChange={(e) => setInput(e.target.value)}
             disabled={isLoading}
@@ -382,7 +493,8 @@ const Therapist = () => {
         </form>
 
         <p className="text-[10px] text-muted-foreground text-center mt-2">
-          MindBridge is an AI companion, not a licensed therapist. In crisis, call iCall: 9152987821
+          MindBridge is an AI companion, not a licensed therapist. In crisis, call iCall: 9152987821 • 
+          {voiceEnabled ? " 🔊 Voice on" : " 🔇 Voice off"}
         </p>
       </main>
     </div>
