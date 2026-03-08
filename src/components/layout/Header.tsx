@@ -1,20 +1,24 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Heart, FileText, MessageCircle, Building2, QrCode, UserCircle, LogIn } from "lucide-react";
+import { Menu, X, Heart, FileText, MessageCircle, Building2, QrCode, UserCircle, LogIn, Globe } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
+import { useI18n } from "@/contexts/I18nContext";
+import { SUPPORTED_LANGUAGES } from "@/i18n";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
   const { user } = useAuth();
+  const { t, language, setLanguage, isTranslating } = useI18n();
 
   const navItems = [
-    { path: "/", label: "Home", icon: Heart },
-    { path: "/documents", label: "My Documents", icon: FileText },
-    { path: "/translate", label: "Translate", icon: MessageCircle },
-    { path: "/my-qr", label: "My QR Code", icon: QrCode },
-    { path: "/hospital/auth", label: "Hospital Portal", icon: Building2 },
+    { path: "/", label: t("nav.home"), icon: Heart },
+    { path: "/documents", label: t("nav.documents"), icon: FileText },
+    { path: "/translate", label: t("nav.translate"), icon: MessageCircle },
+    { path: "/my-qr", label: t("nav.qrCode"), icon: QrCode },
+    { path: "/hospital/auth", label: t("nav.hospitalPortal"), icon: Building2 },
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -50,20 +54,54 @@ const Header = () => {
                 className={`gap-2 ${isActive("/profile") || isActive("/auth") ? "bg-primary/10 text-primary" : ""}`}
               >
                 {user ? <UserCircle className="w-4 h-4" /> : <LogIn className="w-4 h-4" />}
-                {user ? "Profile" : "Sign In"}
+                {user ? t("nav.profile") : t("nav.signIn")}
               </Button>
             </Link>
+
+            {/* Language Switcher */}
+            <Select value={language} onValueChange={setLanguage}>
+              <SelectTrigger className="w-auto gap-1 h-9 px-2 border-none bg-transparent hover:bg-accent">
+                <Globe className="w-4 h-4 text-muted-foreground" />
+                <span className="text-sm">{SUPPORTED_LANGUAGES.find(l => l.code === language)?.flag}</span>
+              </SelectTrigger>
+              <SelectContent>
+                {SUPPORTED_LANGUAGES.map((lang) => (
+                  <SelectItem key={lang.code} value={lang.code}>
+                    <span className="flex items-center gap-2">
+                      <span>{lang.flag}</span>
+                      <span>{lang.label}</span>
+                    </span>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </nav>
 
           {/* Mobile Menu Button */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className="md:hidden"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </Button>
+          <div className="flex items-center gap-2 md:hidden">
+            <Select value={language} onValueChange={setLanguage}>
+              <SelectTrigger className="w-auto gap-1 h-9 px-2 border-none bg-transparent">
+                <span className="text-sm">{SUPPORTED_LANGUAGES.find(l => l.code === language)?.flag}</span>
+              </SelectTrigger>
+              <SelectContent>
+                {SUPPORTED_LANGUAGES.map((lang) => (
+                  <SelectItem key={lang.code} value={lang.code}>
+                    <span className="flex items-center gap-2">
+                      <span>{lang.flag}</span>
+                      <span>{lang.label}</span>
+                    </span>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </Button>
+          </div>
         </div>
 
         {/* Mobile Navigation */}
@@ -91,13 +129,18 @@ const Header = () => {
                   className={`w-full justify-start gap-2 ${isActive("/profile") || isActive("/auth") ? "bg-primary/10 text-primary" : ""}`}
                 >
                   {user ? <UserCircle className="w-4 h-4" /> : <LogIn className="w-4 h-4" />}
-                  {user ? "Profile" : "Sign In"}
+                  {user ? t("nav.profile") : t("nav.signIn")}
                 </Button>
               </Link>
             </div>
           </nav>
         )}
       </div>
+      {isTranslating && (
+        <div className="h-0.5 bg-primary/20 overflow-hidden">
+          <div className="h-full bg-primary animate-pulse w-full" />
+        </div>
+      )}
     </header>
   );
 };
