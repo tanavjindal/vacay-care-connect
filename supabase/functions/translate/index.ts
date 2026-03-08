@@ -13,11 +13,11 @@ serve(async (req) => {
   }
 
   try {
-    // Verify authentication
+    // Verify authentication using getClaims
     const authHeader = req.headers.get("Authorization");
-    if (!authHeader) {
+    if (!authHeader?.startsWith("Bearer ")) {
       return new Response(
-        JSON.stringify({ error: "Missing authorization header" }),
+        JSON.stringify({ error: "Unauthorized" }),
         { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
@@ -28,8 +28,9 @@ serve(async (req) => {
       { global: { headers: { Authorization: authHeader } } }
     );
 
-    const { data: { user }, error: authError } = await supabaseClient.auth.getUser();
-    if (authError || !user) {
+    const token = authHeader.replace("Bearer ", "");
+    const { data, error: authError } = await supabaseClient.auth.getClaims(token);
+    if (authError || !data?.claims) {
       return new Response(
         JSON.stringify({ error: "Unauthorized" }),
         { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
@@ -45,7 +46,6 @@ serve(async (req) => {
       });
     }
 
-    // Limit input text length to prevent abuse
     if (text.length > 10000) {
       return new Response(JSON.stringify({ error: "Text too long. Maximum 10,000 characters." }), {
         status: 400,
@@ -89,8 +89,8 @@ Rules:
       throw new Error(`AI Gateway error [${response.status}]: ${errorBody}`);
     }
 
-    const data = await response.json();
-    const translation = data.choices?.[0]?.message?.content?.trim();
+    const responseData = await response.json();
+    const translation = responseData.choices?.[0]?.message?.content?.trim();
 
     return new Response(JSON.stringify({ translation }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
