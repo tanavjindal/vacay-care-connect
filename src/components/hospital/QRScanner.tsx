@@ -78,10 +78,10 @@ const QRScanner = ({ hospitalId, onPatientFound }: QRScannerProps) => {
     setIsLoading(true);
 
     try {
-      // Parse QR code - expected format: medibridge:patient:{qr_code_token}
+      // Parse QR code - expected format: translatical:patient:{qr_code_token}
       let token = decodedText;
-      if (decodedText.startsWith("medibridge:patient:")) {
-        token = decodedText.replace("medibridge:patient:", "");
+      if (decodedText.startsWith("translatical:patient:")) {
+        token = decodedText.replace("translatical:patient:", "");
       }
 
       // Look up patient by QR token
