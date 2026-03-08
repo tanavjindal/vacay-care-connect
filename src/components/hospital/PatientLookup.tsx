@@ -17,7 +17,6 @@ interface Patient {
   chronic_conditions: string[] | null;
   emergency_contact_name: string | null;
   emergency_contact_phone: string | null;
-  qr_code_token: string;
 }
 
 interface PatientLookupProps {
@@ -40,26 +39,23 @@ const PatientLookup = ({ hospitalId, onPatientFound }: PatientLookupProps) => {
     setHasSearched(true);
 
     try {
-      // Search by national ID or name
-      const { data, error } = await supabase
-        .from("patients")
-        .select("*")
-        .ilike("national_id", `%${searchQuery}%`)
-        .limit(10);
+      // Use secure server-side function for patient lookup
+      const { data, error } = await supabase.rpc("lookup_patient_by_name", {
+        _search_name: searchQuery.trim(),
+        _hospital_id: hospitalId,
+      });
 
       if (error) throw error;
 
-      setSearchResults(data || []);
+      setSearchResults((data as Patient[]) || []);
 
+      // Log access for each patient found
       if (data && data.length > 0) {
-        // Log access for audit trail
-        const session = await supabase.auth.getSession();
-        if (session.data.session) {
-          await supabase.from("hospital_patient_access_logs").insert({
-            hospital_id: hospitalId,
-            patient_id: data[0].id,
-            accessed_by: session.data.session.user.id,
-            access_method: "id_lookup",
+        for (const patient of data) {
+          await supabase.rpc("log_patient_access", {
+            _patient_id: patient.id,
+            _hospital_id: hospitalId,
+            _access_method: "name_lookup",
           });
         }
       }
@@ -75,7 +71,7 @@ const PatientLookup = ({ hospitalId, onPatientFound }: PatientLookupProps) => {
   };
 
   const selectPatient = (patient: Patient) => {
-    onPatientFound(patient);
+    onPatientFound(patient as any);
     toast({
       title: "Patient found",
       description: `Loading records for ${patient.full_name}`,
@@ -91,17 +87,17 @@ const PatientLookup = ({ hospitalId, onPatientFound }: PatientLookupProps) => {
           </div>
           <h2 className="text-xl font-semibold text-foreground mb-2">Patient Lookup</h2>
           <p className="text-sm text-muted-foreground">
-            Search by National ID or Aadhaar number
+            Search by patient name or National ID
           </p>
         </div>
 
         <form onSubmit={handleSearch} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="search">Aadhaar / National ID Number</Label>
+            <Label htmlFor="search">Patient Name or National ID</Label>
             <div className="flex gap-2">
               <Input
                 id="search"
-                placeholder="Enter Aadhaar or National ID number..."
+                placeholder="Enter patient name or ID..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="flex-1"
@@ -125,7 +121,7 @@ const PatientLookup = ({ hospitalId, onPatientFound }: PatientLookupProps) => {
                 <AlertCircle className="w-12 h-12 text-muted-foreground/50 mx-auto mb-3" />
                 <p className="text-muted-foreground">No patients found matching "{searchQuery}"</p>
                 <p className="text-sm text-muted-foreground mt-1">
-                  Try a different ID or check the spelling
+                  Try a different name or check the spelling
                 </p>
               </div>
             ) : (
