@@ -25,7 +25,7 @@ const hi = {
   "howItWorks.title": "Translatical कैसे काम करता है",
   "howItWorks.subtitle": "सरल कदम यह सुनिश्चित करने के लिए कि आपको भारत में कहीं भी चिकित्सा देखभाल मिले",
   "howItWorks.step1Title": "अपने रिकॉर्ड अपलोड करें",
-  "howItWorks.step1Desc": "अपनी यात्रा से पहले, MediBridge पर प्रिस्क्रिप्शन, लैब रिपोर्ट और मेडिकल इतिहास अपलोड करें।",
+  "howItWorks.step1Desc": "अपनी यात्रा से पहले, Translatical पर प्रिस्क्रिप्शन, लैब रिपोर्ट और मेडिकल इतिहास अपलोड करें।",
   "howItWorks.step2Title": "भाषाएँ चुनें",
   "howItWorks.step2Desc": "अपनी मातृभाषा और वह भाषा चुनें जिसमें आपको संवाद करना है।",
   "howItWorks.step3Title": "संदर्भ के साथ संवाद करें",
