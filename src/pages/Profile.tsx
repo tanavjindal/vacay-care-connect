@@ -127,7 +127,9 @@ const ProfilePage = () => {
     e.preventDefault();
     if (!user) return;
     setSaving(true);
-    const { error } = await supabase
+
+    // Save profile
+    const { error: profileError } = await supabase
       .from("profiles")
       .update({
         display_name: profile.display_name,
@@ -139,9 +141,33 @@ const ProfilePage = () => {
         notifications_enabled: profile.notifications_enabled,
       })
       .eq("user_id", user.id);
+
+    // Save patient record (upsert)
+    const patientPayload = {
+      user_id: user.id,
+      full_name: patient.full_name || profile.display_name,
+      national_id: patient.national_id || null,
+      date_of_birth: patient.date_of_birth || null,
+      blood_type: patient.blood_type || null,
+      allergies: patient.allergies ? patient.allergies.split(",").map((s) => s.trim()).filter(Boolean) : null,
+      chronic_conditions: patient.chronic_conditions ? patient.chronic_conditions.split(",").map((s) => s.trim()).filter(Boolean) : null,
+      emergency_contact_name: patient.emergency_contact_name || null,
+      emergency_contact_phone: patient.emergency_contact_phone || null,
+    };
+
+    let patientError: any = null;
+    if (hasPatientRecord) {
+      const { error } = await supabase.from("patients").update(patientPayload).eq("user_id", user.id);
+      patientError = error;
+    } else if (patient.national_id || patient.full_name) {
+      const { error } = await supabase.from("patients").insert(patientPayload);
+      patientError = error;
+      if (!error) setHasPatientRecord(true);
+    }
+
     setSaving(false);
-    if (error) {
-      toast({ title: "Error saving", description: error.message, variant: "destructive" });
+    if (profileError || patientError) {
+      toast({ title: "Error saving", description: (profileError || patientError)?.message, variant: "destructive" });
     } else {
       toast({ title: "Profile updated", description: "Your changes have been saved." });
     }
