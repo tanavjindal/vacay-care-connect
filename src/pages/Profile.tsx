@@ -9,7 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import Header from "@/components/layout/Header";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
-import { User, Phone, MapPin, Building2, Globe, Bell, LogOut, Loader2, Save } from "lucide-react";
+import { User, Phone, MapPin, Building2, Globe, Bell, LogOut, Loader2, Save, CreditCard, Droplets, AlertTriangle, Heart } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 type Profile = {
@@ -20,6 +20,17 @@ type Profile = {
   city: string;
   preferred_language: string;
   notifications_enabled: boolean;
+};
+
+type PatientInfo = {
+  national_id: string;
+  full_name: string;
+  date_of_birth: string;
+  blood_type: string;
+  allergies: string;
+  chronic_conditions: string;
+  emergency_contact_name: string;
+  emergency_contact_phone: string;
 };
 
 const LANGUAGES = [
@@ -50,6 +61,17 @@ const ProfilePage = () => {
     preferred_language: "en",
     notifications_enabled: true,
   });
+  const [patient, setPatient] = useState<PatientInfo>({
+    national_id: "",
+    full_name: "",
+    date_of_birth: "",
+    blood_type: "",
+    allergies: "",
+    chronic_conditions: "",
+    emergency_contact_name: "",
+    emergency_contact_phone: "",
+  });
+  const [hasPatientRecord, setHasPatientRecord] = useState(false);
 
   useEffect(() => {
     if (!authLoading && !user) navigate("/auth");
@@ -57,33 +79,57 @@ const ProfilePage = () => {
 
   useEffect(() => {
     if (!user) return;
-    const fetchProfile = async () => {
-      const { data } = await supabase
+    const fetchData = async () => {
+      // Fetch profile
+      const { data: profileData } = await supabase
         .from("profiles")
         .select("*")
         .eq("user_id", user.id)
         .single();
-      if (data) {
+      if (profileData) {
         setProfile({
-          display_name: data.display_name || "",
-          avatar_url: data.avatar_url || "",
-          phone: data.phone || "",
-          address: data.address || "",
-          city: data.city || "",
-          preferred_language: data.preferred_language || "en",
-          notifications_enabled: data.notifications_enabled ?? true,
+          display_name: profileData.display_name || "",
+          avatar_url: profileData.avatar_url || "",
+          phone: profileData.phone || "",
+          address: profileData.address || "",
+          city: profileData.city || "",
+          preferred_language: profileData.preferred_language || "en",
+          notifications_enabled: profileData.notifications_enabled ?? true,
         });
       }
+
+      // Fetch patient record
+      const { data: patientData } = await supabase
+        .from("patients")
+        .select("*")
+        .eq("user_id", user.id)
+        .maybeSingle();
+      if (patientData) {
+        setHasPatientRecord(true);
+        setPatient({
+          national_id: patientData.national_id || "",
+          full_name: patientData.full_name || "",
+          date_of_birth: patientData.date_of_birth || "",
+          blood_type: patientData.blood_type || "",
+          allergies: patientData.allergies?.join(", ") || "",
+          chronic_conditions: patientData.chronic_conditions?.join(", ") || "",
+          emergency_contact_name: patientData.emergency_contact_name || "",
+          emergency_contact_phone: patientData.emergency_contact_phone || "",
+        });
+      }
+
       setLoading(false);
     };
-    fetchProfile();
+    fetchData();
   }, [user]);
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!user) return;
     setSaving(true);
-    const { error } = await supabase
+
+    // Save profile
+    const { error: profileError } = await supabase
       .from("profiles")
       .update({
         display_name: profile.display_name,
@@ -95,9 +141,33 @@ const ProfilePage = () => {
         notifications_enabled: profile.notifications_enabled,
       })
       .eq("user_id", user.id);
+
+    // Save patient record (upsert)
+    const patientPayload = {
+      user_id: user.id,
+      full_name: patient.full_name || profile.display_name,
+      national_id: patient.national_id || null,
+      date_of_birth: patient.date_of_birth || null,
+      blood_type: patient.blood_type || null,
+      allergies: patient.allergies ? patient.allergies.split(",").map((s) => s.trim()).filter(Boolean) : null,
+      chronic_conditions: patient.chronic_conditions ? patient.chronic_conditions.split(",").map((s) => s.trim()).filter(Boolean) : null,
+      emergency_contact_name: patient.emergency_contact_name || null,
+      emergency_contact_phone: patient.emergency_contact_phone || null,
+    };
+
+    let patientError: any = null;
+    if (hasPatientRecord) {
+      const { error } = await supabase.from("patients").update(patientPayload).eq("user_id", user.id);
+      patientError = error;
+    } else if (patient.national_id || patient.full_name) {
+      const { error } = await supabase.from("patients").insert(patientPayload);
+      patientError = error;
+      if (!error) setHasPatientRecord(true);
+    }
+
     setSaving(false);
-    if (error) {
-      toast({ title: "Error saving", description: error.message, variant: "destructive" });
+    if (profileError || patientError) {
+      toast({ title: "Error saving", description: (profileError || patientError)?.message, variant: "destructive" });
     } else {
       toast({ title: "Profile updated", description: "Your changes have been saved." });
     }
@@ -188,6 +258,71 @@ const ProfilePage = () => {
                   ))}
                 </SelectContent>
               </Select>
+            </div>
+
+            {/* Medical Identity Section */}
+            <div className="pt-4 mt-4 border-t border-border">
+              <h2 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
+                <Heart className="w-5 h-5 text-primary" />
+                Medical Identity
+              </h2>
+
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="national_id">Aadhaar / National ID</Label>
+                  <div className="relative">
+                    <CreditCard className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                    <Input id="national_id" className="pl-10" value={patient.national_id} onChange={(e) => setPatient({ ...patient, national_id: e.target.value })} placeholder="1234 5678 9012" />
+                  </div>
+                  <p className="text-xs text-muted-foreground">Used for patient identification at hospitals</p>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="full_name_medical">Full Legal Name (Medical Records)</Label>
+                  <div className="relative">
+                    <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                    <Input id="full_name_medical" className="pl-10" value={patient.full_name} onChange={(e) => setPatient({ ...patient, full_name: e.target.value })} placeholder="As on your ID" />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="dob">Date of Birth</Label>
+                    <Input id="dob" type="date" value={patient.date_of_birth} onChange={(e) => setPatient({ ...patient, date_of_birth: e.target.value })} />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="blood_type">Blood Type</Label>
+                    <div className="relative">
+                      <Droplets className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                      <Input id="blood_type" className="pl-10" value={patient.blood_type} onChange={(e) => setPatient({ ...patient, blood_type: e.target.value })} placeholder="A+, B-, O+" />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="allergies">Allergies</Label>
+                  <div className="relative">
+                    <AlertTriangle className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                    <Input id="allergies" className="pl-10" value={patient.allergies} onChange={(e) => setPatient({ ...patient, allergies: e.target.value })} placeholder="Penicillin, Peanuts (comma-separated)" />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="chronic">Chronic Conditions</Label>
+                  <Input id="chronic" value={patient.chronic_conditions} onChange={(e) => setPatient({ ...patient, chronic_conditions: e.target.value })} placeholder="Diabetes, Asthma (comma-separated)" />
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="emergency_name">Emergency Contact</Label>
+                    <Input id="emergency_name" value={patient.emergency_contact_name} onChange={(e) => setPatient({ ...patient, emergency_contact_name: e.target.value })} placeholder="Contact name" />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="emergency_phone">Emergency Phone</Label>
+                    <Input id="emergency_phone" type="tel" value={patient.emergency_contact_phone} onChange={(e) => setPatient({ ...patient, emergency_contact_phone: e.target.value })} placeholder="+91 98765 43210" />
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div className="flex items-center justify-between py-2">
