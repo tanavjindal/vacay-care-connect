@@ -78,10 +78,10 @@ const QRScanner = ({ hospitalId, onPatientFound }: QRScannerProps) => {
     setIsLoading(true);
 
     try {
-      // Parse QR code - expected format: medibridge:patient:{qr_code_token}
+      // Parse QR code - expected format: translatical:patient:{qr_code_token}
       let token = decodedText;
-      if (decodedText.startsWith("medibridge:patient:")) {
-        token = decodedText.replace("medibridge:patient:", "");
+      if (decodedText.startsWith("translatical:patient:")) {
+        token = decodedText.replace("translatical:patient:", "");
       }
 
       // Look up patient by QR token
@@ -131,7 +131,7 @@ const QRScanner = ({ hospitalId, onPatientFound }: QRScannerProps) => {
           </div>
           <h2 className="text-xl font-semibold text-foreground mb-2">Scan Patient QR Code</h2>
           <p className="text-sm text-muted-foreground">
-            Scan the patient's MediBridge QR code for instant access to their medical records
+            Scan the patient's Translatical QR code for instant access to their medical records
           </p>
         </div>
 
@@ -188,7 +188,7 @@ const QRScanner = ({ hospitalId, onPatientFound }: QRScannerProps) => {
         <div className="mt-6 space-y-2">
           <h4 className="font-medium text-foreground text-sm">How it works:</h4>
           <ol className="text-sm text-muted-foreground space-y-1 list-decimal list-inside">
-            <li>Ask the patient to show their MediBridge QR code from their phone</li>
+            <li>Ask the patient to show their Translatical QR code from their phone</li>
             <li>Point your camera at the QR code</li>
             <li>Patient records will load automatically</li>
           </ol>

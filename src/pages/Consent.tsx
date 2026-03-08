@@ -109,7 +109,7 @@ const Consent = () => {
             <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center shadow-md">
               <Heart className="w-6 h-6 text-primary-foreground" />
             </div>
-            <span className="text-2xl font-bold gradient-text">MediBridge</span>
+            <span className="text-2xl font-bold gradient-text">Translatical</span>
           </Link>
           <h1 className="text-2xl font-bold text-foreground mb-1">
             {isHospital ? "Hospital Data Agreement" : "Patient Data Consent"}
@@ -132,7 +132,7 @@ const Consent = () => {
               <div className="text-sm text-muted-foreground space-y-3 pr-4">
                 <p className="font-medium text-foreground">1. Medical Data Sharing</p>
                 <p>
-                  By using MediBridge, you consent to the collection, storage, and processing of medical records
+                  By using Translatical, you consent to the collection, storage, and processing of medical records
                   including but not limited to prescriptions, lab reports, imaging results, diagnoses, allergies,
                   chronic conditions, and emergency contact information. {isHospital
                     ? "As a hospital, you agree to access patient data solely for the purpose of providing medical care and only with proper authorization."
@@ -141,20 +141,20 @@ const Consent = () => {
 
                 <p className="font-medium text-foreground">2. Aadhaar / National ID Usage</p>
                 <p>
-                  MediBridge uses national identification numbers (such as Aadhaar) solely for patient identification
-                  and record matching purposes. {isHospital
-                    ? "Your hospital agrees to use Aadhaar data only for verifying patient identity and accessing authorized records. You shall not store, copy, or redistribute Aadhaar numbers outside the MediBridge platform."
-                    : "Your national ID will be stored securely and used only to link your medical records. It will not be shared with third parties for non-medical purposes."}
+                   Translatical uses national identification numbers (such as Aadhaar) solely for patient identification
+                   and record matching purposes. {isHospital
+                     ? "Your hospital agrees to use Aadhaar data only for verifying patient identity and accessing authorized records. You shall not store, copy, or redistribute Aadhaar numbers outside the Translatical platform."
+                     : "Your national ID will be stored securely and used only to link your medical records. It will not be shared with third parties for non-medical purposes."}
                   This usage complies with the Digital Personal Data Protection Act, 2023 (DPDP Act) and applicable UIDAI guidelines.
                 </p>
 
                 <p className="font-medium text-foreground">3. Third-Party Data Sharing</p>
                 <p>
-                  MediBridge will not share your personal or medical data with insurance companies, advertisers, 
-                  government agencies, or any third party without your explicit written consent, except where required 
-                  by law or court order. {isHospital
-                    ? "Hospitals are prohibited from sharing patient data accessed through MediBridge with any third party without the patient's explicit consent."
-                    : "You will be notified if any third-party access is requested and you may decline."}
+                   Translatical will not share your personal or medical data with insurance companies, advertisers, 
+                   government agencies, or any third party without your explicit written consent, except where required 
+                   by law or court order. {isHospital
+                     ? "Hospitals are prohibited from sharing patient data accessed through Translatical with any third party without the patient's explicit consent."
+                     : "You will be notified if any third-party access is requested and you may decline."}
                 </p>
 
                 <p className="font-medium text-foreground">4. Data Security & Audit</p>
@@ -167,8 +167,8 @@ const Consent = () => {
 
                 <p className="font-medium text-foreground">5. Right to Withdraw</p>
                 <p>
-                  You may withdraw your consent at any time by contacting support@medibridge.com. 
-                  Upon withdrawal, your data will be deleted within 30 days unless retention is required by law.
+                   You may withdraw your consent at any time by contacting support@translatical.com. 
+                   Upon withdrawal, your data will be deleted within 30 days unless retention is required by law.
                 </p>
               </div>
             </ScrollArea>
@@ -251,7 +251,7 @@ const Consent = () => {
 
         <p className="text-xs text-muted-foreground text-center mt-4 max-w-md mx-auto">
           This agreement is governed by the laws of India, including the Digital Personal Data Protection Act, 2023. 
-          For questions, contact support@medibridge.com.
+          For questions, contact support@translatical.com.
         </p>
       </div>
     </div>

@@ -28,13 +28,13 @@ export const I18nProvider = ({ children }: { children: ReactNode }) => {
 
   // Detect browser language on mount
   useEffect(() => {
-    const saved = localStorage.getItem("medibridge_language");
+    const saved = localStorage.getItem("translatical_language");
     if (saved) {
       setLanguageState(saved);
     } else {
       const detected = detectBrowserLanguage();
       setLanguageState(detected);
-      localStorage.setItem("medibridge_language", detected);
+      localStorage.setItem("translatical_language", detected);
     }
   }, []);
 
@@ -90,7 +90,7 @@ export const I18nProvider = ({ children }: { children: ReactNode }) => {
 
   const setLanguage = useCallback((lang: string) => {
     setLanguageState(lang);
-    localStorage.setItem("medibridge_language", lang);
+    localStorage.setItem("translatical_language", lang);
   }, []);
 
   const t = useCallback(

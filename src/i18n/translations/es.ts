@@ -22,7 +22,7 @@ const es = {
   "hero.feature3Title": "Mantente seguro",
   "hero.feature3Desc": "Comunícate eficazmente con los doctores",
 
-  "howItWorks.title": "Cómo funciona MediBridge",
+  "howItWorks.title": "Cómo funciona Translatical",
   "howItWorks.subtitle": "Pasos simples para asegurar que recibas la atención médica que necesitas en India",
   "howItWorks.step1Title": "Sube tus registros",
   "howItWorks.step1Desc": "Antes de tu viaje, sube recetas, informes de laboratorio e historial médico.",
@@ -45,10 +45,10 @@ const es = {
   "cta.demoBtn": "Prueba la Demo",
   "cta.disclaimer": "Sin tarjeta de crédito • Tus datos permanecen privados y seguros",
 
-  "footer.copyright": "© 2024 MediBridge. Rompiendo barreras lingüísticas para salvar vidas.",
+  "footer.copyright": "© 2024 Translatical. Rompiendo barreras lingüísticas para salvar vidas.",
   "footer.madeWith": "Hecho con ❤️ para turistas que visitan India",
 
-  "auth.welcome": "Bienvenido a MediBridge",
+  "auth.welcome": "Bienvenido a Translatical",
   "auth.subtitle": "Inicia sesión para gestionar tu perfil de salud",
   "auth.google": "Continuar con Google",
   "auth.orEmail": "O continuar con correo",

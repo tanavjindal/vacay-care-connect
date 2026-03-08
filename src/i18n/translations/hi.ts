@@ -22,10 +22,10 @@ const hi = {
   "hero.feature3Title": "सुरक्षित रहें",
   "hero.feature3Desc": "डॉक्टरों के साथ प्रभावी ढंग से संवाद करें",
 
-  "howItWorks.title": "MediBridge कैसे काम करता है",
+  "howItWorks.title": "Translatical कैसे काम करता है",
   "howItWorks.subtitle": "सरल कदम यह सुनिश्चित करने के लिए कि आपको भारत में कहीं भी चिकित्सा देखभाल मिले",
   "howItWorks.step1Title": "अपने रिकॉर्ड अपलोड करें",
-  "howItWorks.step1Desc": "अपनी यात्रा से पहले, MediBridge पर प्रिस्क्रिप्शन, लैब रिपोर्ट और मेडिकल इतिहास अपलोड करें।",
+  "howItWorks.step1Desc": "अपनी यात्रा से पहले, Translatical पर प्रिस्क्रिप्शन, लैब रिपोर्ट और मेडिकल इतिहास अपलोड करें।",
   "howItWorks.step2Title": "भाषाएँ चुनें",
   "howItWorks.step2Desc": "अपनी मातृभाषा और वह भाषा चुनें जिसमें आपको संवाद करना है।",
   "howItWorks.step3Title": "संदर्भ के साथ संवाद करें",
@@ -45,10 +45,10 @@ const hi = {
   "cta.demoBtn": "अनुवाद डेमो आज़माएं",
   "cta.disclaimer": "क्रेडिट कार्ड की आवश्यकता नहीं • आपका डेटा निजी और सुरक्षित रहता है",
 
-  "footer.copyright": "© 2024 MediBridge. भाषा की बाधाओं को तोड़कर जीवन बचाना।",
+  "footer.copyright": "© 2024 Translatical. भाषा की बाधाओं को तोड़कर जीवन बचाना।",
   "footer.madeWith": "भारत आने वाले पर्यटकों के लिए ❤️ से बनाया गया",
 
-  "auth.welcome": "MediBridge में आपका स्वागत है",
+  "auth.welcome": "Translatical में आपका स्वागत है",
   "auth.subtitle": "अपना स्वास्थ्य प्रोफ़ाइल प्रबंधित करने के लिए साइन इन करें",
   "auth.google": "Google से जारी रखें",
   "auth.orEmail": "या ईमेल से जारी रखें",

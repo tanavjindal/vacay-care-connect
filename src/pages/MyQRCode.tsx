@@ -96,14 +96,14 @@ const MyQRCode = () => {
     img.onload = () => {
       ctx?.drawImage(img, 0, 0, 512, 512);
       const a = document.createElement("a");
-      a.download = "medibridge-qr.png";
+      a.download = "translatical-qr.png";
       a.href = canvas.toDataURL("image/png");
       a.click();
     };
     img.src = "data:image/svg+xml;base64," + btoa(svgData);
   };
 
-  const qrValue = qrToken ? `medibridge:patient:${qrToken}` : "";
+  const qrValue = qrToken ? `translatical:patient:${qrToken}` : "";
 
   return (
     <div className="min-h-screen bg-background">
@@ -168,7 +168,7 @@ const MyQRCode = () => {
               </div>
 
               <p className="text-xs text-muted-foreground text-center mb-6 max-w-xs">
-                Present this QR code at any MediBridge-enabled hospital. Staff will scan it to securely access your medical records.
+                Present this QR code at any Translatical-enabled hospital. Staff will scan it to securely access your medical records.
               </p>
 
               <div className="flex gap-3">
