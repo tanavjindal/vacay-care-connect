@@ -44,7 +44,7 @@ const PatientLookup = ({ hospitalId, onPatientFound }: PatientLookupProps) => {
       const { data, error } = await supabase
         .from("patients")
         .select("*")
-        .or(`national_id.ilike.%${searchQuery}%,full_name.ilike.%${searchQuery}%`)
+        .ilike("national_id", `%${searchQuery}%`)
         .limit(10);
 
       if (error) throw error;
@@ -91,17 +91,17 @@ const PatientLookup = ({ hospitalId, onPatientFound }: PatientLookupProps) => {
           </div>
           <h2 className="text-xl font-semibold text-foreground mb-2">Patient Lookup</h2>
           <p className="text-sm text-muted-foreground">
-            Search by National ID, Aadhaar number, or patient name
+            Search by National ID or Aadhaar number
           </p>
         </div>
 
         <form onSubmit={handleSearch} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="search">ID Number or Name</Label>
+            <Label htmlFor="search">Aadhaar / National ID Number</Label>
             <div className="flex gap-2">
               <Input
                 id="search"
-                placeholder="Enter Aadhaar, SSN, or patient name..."
+                placeholder="Enter Aadhaar or National ID number..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="flex-1"
