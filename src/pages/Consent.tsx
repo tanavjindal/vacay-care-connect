@@ -150,11 +150,11 @@ const Consent = () => {
 
                 <p className="font-medium text-foreground">3. Third-Party Data Sharing</p>
                 <p>
-                  MediBridge will not share your personal or medical data with insurance companies, advertisers, 
-                  government agencies, or any third party without your explicit written consent, except where required 
-                  by law or court order. {isHospital
-                    ? "Hospitals are prohibited from sharing patient data accessed through MediBridge with any third party without the patient's explicit consent."
-                    : "You will be notified if any third-party access is requested and you may decline."}
+                   Translatical will not share your personal or medical data with insurance companies, advertisers, 
+                   government agencies, or any third party without your explicit written consent, except where required 
+                   by law or court order. {isHospital
+                     ? "Hospitals are prohibited from sharing patient data accessed through Translatical with any third party without the patient's explicit consent."
+                     : "You will be notified if any third-party access is requested and you may decline."}
                 </p>
 
                 <p className="font-medium text-foreground">4. Data Security & Audit</p>
