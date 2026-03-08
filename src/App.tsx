@@ -26,6 +26,7 @@ const App = () => (
           <Route path="/translate" element={<Translate />} />
           <Route path="/hospital/auth" element={<HospitalAuth />} />
           <Route path="/hospital/dashboard" element={<HospitalDashboard />} />
+          <Route path="/consent" element={<Consent />} />
           <Route path="/my-qr" element={<MyQRCode />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
