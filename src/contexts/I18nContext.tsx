@@ -28,22 +28,9 @@ export const I18nProvider = ({ children }: { children: ReactNode }) => {
 
   // Detect browser language on mount
   useEffect(() => {
-    // Check URL param for language reset
-    const urlParams = new URLSearchParams(window.location.search);
-    const langParam = urlParams.get("lang");
-    if (langParam) {
-      setLanguageState(langParam);
-      localStorage.setItem("translatical_language", langParam);
-      return;
-    }
-    const saved = localStorage.getItem("translatical_language");
-    if (saved) {
-      setLanguageState(saved);
-    } else {
-      const detected = detectBrowserLanguage();
-      setLanguageState(detected);
-      localStorage.setItem("translatical_language", detected);
-    }
+    // Force reset to English and clear old language preference
+    localStorage.setItem("translatical_language", "en");
+    setLanguageState("en");
   }, []);
 
   // When language changes to a non-static language, fetch AI translations
