@@ -96,7 +96,7 @@ const MyQRCode = () => {
     img.onload = () => {
       ctx?.drawImage(img, 0, 0, 512, 512);
       const a = document.createElement("a");
-      a.download = "medibridge-qr.png";
+      a.download = "translatical-qr.png";
       a.href = canvas.toDataURL("image/png");
       a.click();
     };
