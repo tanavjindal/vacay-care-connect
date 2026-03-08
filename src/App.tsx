@@ -14,6 +14,8 @@ import HospitalAuth from "./pages/HospitalAuth";
 import HospitalDashboard from "./pages/HospitalDashboard";
 import MyQRCode from "./pages/MyQRCode";
 import Consent from "./pages/Consent";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
