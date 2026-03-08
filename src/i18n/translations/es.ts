@@ -22,7 +22,7 @@ const es = {
   "hero.feature3Title": "Mantente seguro",
   "hero.feature3Desc": "Comunícate eficazmente con los doctores",
 
-  "howItWorks.title": "Cómo funciona MediBridge",
+  "howItWorks.title": "Cómo funciona Translatical",
   "howItWorks.subtitle": "Pasos simples para asegurar que recibas la atención médica que necesitas en India",
   "howItWorks.step1Title": "Sube tus registros",
   "howItWorks.step1Desc": "Antes de tu viaje, sube recetas, informes de laboratorio e historial médico.",
